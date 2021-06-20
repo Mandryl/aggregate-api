@@ -1,7 +1,7 @@
 """Incidents router"""
 from fastapi import APIRouter
 
-from src.model.incidents import Incident
+from app.model.incidents import Incident
 
 router = APIRouter()
 

@@ -1,7 +1,7 @@
 """FastAPI main"""
 from fastapi import FastAPI
 
-from src.router import incidents
+from app.router import incidents
 
 app = FastAPI()
 
