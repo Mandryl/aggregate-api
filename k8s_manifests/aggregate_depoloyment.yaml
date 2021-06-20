@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aggregate-api
+spec:
+  selector:
+    matchLabels:
+      name: aggregate-api-deployment
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        name: aggregate-api-deployment
+    spec:
+      containers:
+      - name: aggregate-api
+        image: aggregate-api:latest
+        # フルパスの場合→　542844532577.dkr.ecr.ap-northeast-1.amazonaws.com/aggregate-api:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name:
+          value:
+        - name:
+          value:
+
+-----
+apiVersion: v1
+kind: Service
+metadata:
+  name: aggregate-api-service
+spec:
+  ports:
+    - port: 80
+  selector:
+    name: aggregate-api-deployment
