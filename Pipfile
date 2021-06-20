@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[scripts]
+rundev = "pipenv run uvicorn src.main:app --reload"
+runprod = "pipenv run gunicorn src.main:app -w 4 -k uvicorn.workers.UvicornWorker"
+
+[packages]
+fastapi = "*"
+"uvicorn[standard]" = "*"
+pydantic = "*"
+gunicorn = "*"
+
+[dev-packages]
+black = "*"
+pylint = "*"
+
+[requires]
+python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true
