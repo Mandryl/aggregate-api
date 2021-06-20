@@ -4,18 +4,23 @@ verify_ssl = true
 name = "pypi"
 
 [scripts]
-rundev = "pipenv run uvicorn src.main:app --reload"
-runprod = "pipenv run gunicorn src.main:app -w 4 -k uvicorn.workers.UvicornWorker"
+rundev = "pipenv run uvicorn app.main:app --debug"
+runprod = "pipenv run gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker"
 
 [packages]
 fastapi = "*"
 "uvicorn[standard]" = "*"
 pydantic = "*"
 gunicorn = "*"
+boto3 = "*"
+pillow = "*"
 
 [dev-packages]
 black = "*"
 pylint = "*"
+"boto3-stubs[essential]" = "*"
+"boto3-stubs[sagemaker-runtime]" = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.9"

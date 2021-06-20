@@ -5,5 +5,6 @@ from pydantic import BaseModel
 class Incident(BaseModel):
     """Incidents API Model"""
 
-    imageUrl: str
+    object_name: str
+    bucket_name: str
     region: str
