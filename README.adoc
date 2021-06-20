@@ -1,0 +1,31 @@
+= Aggregate API for 5G Edge Computing Challenge
+
+== Getting Started
+
+=== Prerequisite
+
+- Install `pipenv`
+
+=== Initialize project
+
+[source,shell script]
+----
+pipenv sync
+
+# for development
+pipenv sync --dev
+----
+
+=== Run in development
+
+[source,shell script]
+----
+pipenv run rundev
+----
+
+=== Run in production
+
+[source,shell script]
+----
+pipenv run runprod
+----
