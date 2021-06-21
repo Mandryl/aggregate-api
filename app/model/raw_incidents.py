@@ -1,9 +1,11 @@
 """Incidents model"""
+from typing import List
+
 from pydantic import BaseModel
 
 
-class Incident(BaseModel):
+class RawIncident(BaseModel):
     """Incidents API Model"""
 
-    object_name: str
+    images: List[str]
     region: str

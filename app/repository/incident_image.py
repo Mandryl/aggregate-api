@@ -1,6 +1,8 @@
 """Incident image repository"""
+import base64
+import uuid
 from dataclasses import dataclass
-from typing import Tuple, Optional, NamedTuple
+from typing import Tuple, Optional, NamedTuple, List
 
 import boto3
 from PIL import Image, ExifTags
@@ -36,8 +38,24 @@ class IncidentImageRepository:
         image = Image.open(obj)
         return self._get_gps(image)
 
-    def get_object_url(self, object_name, bucket_name):
+    def get_object_url(self, object_name: str, bucket_name: str):
         return f"https://{bucket_name}.s3.{self.boto_session.region_name}.amazonaws.com/{object_name}"
+
+    def upload_files(
+        self, base64images: List[str], bucket_name: str
+    ) -> List[str]:
+        object_names = []
+        for image in base64images:
+            key = f"{uuid.uuid4()}.jpg"
+            self.s3_client.put_object(
+                Bucket=bucket_name,
+                Key=key,
+                ContentType="image/jpg",
+                Body=self.base64_to_binary(image),
+            )
+            object_names.append(key)
+
+        return object_names
 
     def _get_gps(self, image: Image) -> Optional[Location]:
         exif = {
@@ -71,6 +89,10 @@ class IncidentImageRepository:
             self._get_decimal_latitude(lat, lat_ref),
             self._get_decimal_longitude(lon, lon_ref),
         )
+
+    @staticmethod
+    def base64_to_binary(base64_str: str) -> bytes:
+        return base64.b64decode(base64_str.encode("UTF-8"))
 
     @staticmethod
     def _get_decimal_latitude(

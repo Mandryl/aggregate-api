@@ -2,6 +2,7 @@
 import sys
 from dataclasses import dataclass
 from logging import getLogger, DEBUG, StreamHandler
+from typing import List
 
 
 from app.model.incidents_prediction import IncidentPredictionResponse
@@ -70,3 +71,26 @@ class IncidentsService:
         )
 
         logger.debug("END service")
+
+    def create_incidents_from_raw_image(
+        self,
+        images: List[str],
+        bucket_name: str,
+        region: str,
+        prediction_repo: PredictionRepository,
+        incident_image_repo: IncidentImageRepository,
+        danger_zone_repo: DangerZoneRepository,
+    ):
+        # Upload to S3
+        for object_name in incident_image_repo.upload_files(
+            base64images=images, bucket_name=bucket_name
+        ):
+            logger.debug("Process key: %s", object_name)
+            self.create_incidents(
+                object_name=object_name,
+                bucket_name=bucket_name,
+                region=region,
+                prediction_repo=prediction_repo,
+                incident_image_repo=incident_image_repo,
+                danger_zone_repo=danger_zone_repo,
+            )

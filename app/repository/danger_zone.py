@@ -54,8 +54,8 @@ class DangerZoneRepository:
         response = self.table.put_item(
             Item={
                 "ID": str(self.get_next_id()),
-                "Latitude": Decimal(location.latitude),
-                "Longitude": Decimal(location.longitude),
+                "Latitude": Decimal(str(location.latitude)),
+                "Longitude": Decimal(str(location.longitude)),
                 "PhotoUrl": photo_url,
                 "Code": region,
             },
