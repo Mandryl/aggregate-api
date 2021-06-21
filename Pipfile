@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [scripts]
-rundev = "pipenv run uvicorn app.main:app --debug"
-runprod = "pipenv run gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker"
+rundev = "pipenv run uvicorn app.main:app --debug --host 0.0.0.0"
+runprod = "pipenv run gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0"
 
 [packages]
 fastapi = "*"
